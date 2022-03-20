@@ -99,22 +99,10 @@ class TvDatafeed:
 
         import chromedriver_autoinstaller
 
-        path = chromedriver_autoinstaller.install(cwd=True)
-
+        path = chromedriver_autoinstaller.install(path=self.path)
         if path is not None:
-            self.chromedriver_path = os.path.join(
-                self.path, "chromedriver" + (".exe" if ".exe" in path else "")
-            )
-            shutil.copy(path, self.chromedriver_path)
+            self.chromedriver_path = path
             self.__save_token(token=None)
-
-            try:
-                time.sleep(1)
-                os.remove(path)
-            except:
-                logger.info(
-                    f"unable to remove file '{path}', you may want to remove it manually"
-                )
 
         else:
             logger.error(" unable to download chromedriver automatically.")
